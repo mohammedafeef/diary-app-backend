@@ -1,0 +1,22 @@
+{
+  "name": "dairy-app-backend",
+  "version": "1.0.0",
+  "description": "dairy app API server",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "keywords": [
+    "dairy"
+  ],
+  "author": "afeef",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "moongoose": "^0.0.5",
+    "nodemon": "^2.0.15",
+    "validator": "^13.7.0"
+  }
+}

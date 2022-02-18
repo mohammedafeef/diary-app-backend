@@ -1,0 +1,41 @@
+const Dairy = require("../models/dairyModel");
+exports.getDairy = async (req, res, next) => {
+  try {
+    const createdBy = req.user;
+    const dairy = await Dairy.find({ createdBy });
+    if (!dairy) return res.status(401).send({ message: "No dairy found" });
+    res.status(201).send({ data: dairy });
+  } catch (err) {
+    next(err);
+  }
+};
+exports.getDairyById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) return res.status(401).send({ message: "id is required" });
+    const dairy = await Dairy.findById(req.params.id);
+    if (!dairy && dairy.createdBy !== id)
+      return res.status(401).send({ message: "No dairy found" });
+    res.status(201).send({ data: dairy });
+  } catch (err) {
+    next(err);
+  }
+};
+exports.addDairy = async (req, res, next) => {
+  try {
+    const { content, subject, date } = req.body;
+    if (!content || !subject || !date)
+      return res
+        .status(401)
+        .send({ message: "content, subject and date are required" });
+    const dairy = await Dairy.create({
+      content,
+      subject,
+      date,
+    });
+    res.status(201).send({ data: dairy });
+  } catch (err) {
+    next(err);
+  }
+};
