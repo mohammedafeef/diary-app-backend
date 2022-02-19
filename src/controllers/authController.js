@@ -17,7 +17,7 @@ exports.login = async (req, res, next) => {
     user.password = undefined;
     res.status(200).json({ data: { ...user, token } });
   } catch (err) {
-    next(err);
+    next(err, req, res, next);
   }
 };
 exports.register = async (req, res, next) => {
@@ -35,7 +35,7 @@ exports.register = async (req, res, next) => {
     user.password = undefined;
     res.status(201).send({ data: user });
   } catch (err) {
-    next(err);
+    next(err, req, res, next);
   }
 };
 
@@ -56,6 +56,6 @@ exports.autheticateUser = async (req, res, next) => {
     //sending forward to the route function
     return next();
   } catch (err) {
-    next(err);
+    next(err, req, res, next);
   }
 };

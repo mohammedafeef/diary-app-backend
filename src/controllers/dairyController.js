@@ -1,4 +1,4 @@
-const Dairy = require("../models/dairyModel");
+const Dairy = require("../models/Dairy");
 exports.getDairy = async (req, res, next) => {
   try {
     const createdBy = req.user;
@@ -6,7 +6,7 @@ exports.getDairy = async (req, res, next) => {
     if (!dairy) return res.status(401).send({ message: "No dairy found" });
     res.status(201).send({ data: dairy });
   } catch (err) {
-    next(err);
+    next(err, req, res, next);
   }
 };
 exports.getDairyById = async (req, res, next) => {
@@ -19,7 +19,7 @@ exports.getDairyById = async (req, res, next) => {
       return res.status(401).send({ message: "No dairy found" });
     res.status(201).send({ data: dairy });
   } catch (err) {
-    next(err);
+    next(err, req, res, next);
   }
 };
 exports.addDairy = async (req, res, next) => {
@@ -36,6 +36,6 @@ exports.addDairy = async (req, res, next) => {
     });
     res.status(201).send({ data: dairy });
   } catch (err) {
-    next(err);
+    next(err, req, res, next);
   }
 };
