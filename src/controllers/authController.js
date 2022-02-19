@@ -9,13 +9,18 @@ exports.login = async (req, res, next) => {
       return res
         .status(401)
         .send({ message: "email and password are required" });
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email }).select(
+      "+password -__v -updatedAt -createdAt"
+    );
     const valid = await authHelper.matchPassword(password, user.password);
+    console.log(valid);
+    console.log(user);
     if (!user || !valid)
       return res.status(401).send({ message: "Email or Password is wrong" });
     const token = await authHelper.createNewToken(user.id);
     user.password = undefined;
-    res.status(200).json({ data: { ...user, token } });
+    user._id = undefined;
+    res.status(200).json({ data: { user, token } });
   } catch (err) {
     next(err, req, res, next);
   }
@@ -33,6 +38,9 @@ exports.register = async (req, res, next) => {
       password,
     });
     user.password = undefined;
+    user.createdAt = undefined;
+    user.updatedAt = undefined;
+    user._id = undefined;
     res.status(201).send({ data: user });
   } catch (err) {
     next(err, req, res, next);
@@ -43,7 +51,7 @@ exports.autheticateUser = async (req, res, next) => {
   try {
     //checking that is token is given or not
     if (!req.headers.token)
-      return res.status(401).send({ message: "Token is required" });
+      return res.status(401).send({ message: "Unauthorized request" });
     //verify the jwt token and decoding data from that
     const userCredentials = await jwt.verify(
       req.headers.token,
