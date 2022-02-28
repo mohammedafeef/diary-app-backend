@@ -13,8 +13,6 @@ exports.login = async (req, res, next) => {
       "+password -__v -updatedAt -createdAt"
     );
     const valid = await authHelper.matchPassword(password, user.password);
-    console.log(valid);
-    console.log(user);
     if (!user || !valid)
       return res.status(401).send({ message: "Email or Password is wrong" });
     const token = await authHelper.createNewToken(user.id);
