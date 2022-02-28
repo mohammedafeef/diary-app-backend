@@ -20,7 +20,7 @@ exports.login = async (req, res, next) => {
     const token = await authHelper.createNewToken(user.id);
     user.password = undefined;
     user._id = undefined;
-    res.status(200).json({ data: { user, token } });
+    res.status(200).json({ user, token });
   } catch (err) {
     next(err, req, res, next);
   }
@@ -41,7 +41,7 @@ exports.register = async (req, res, next) => {
     user.createdAt = undefined;
     user.updatedAt = undefined;
     user._id = undefined;
-    res.status(201).send({ data: user });
+    res.status(201).send({ user });
   } catch (err) {
     next(err, req, res, next);
   }

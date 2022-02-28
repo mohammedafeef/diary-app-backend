@@ -6,7 +6,7 @@ exports.getDairy = async (req, res, next) => {
       "-createdBy -__v -updatedAt -createdAt"
     );
     if (!dairy) return res.status(401).send({ message: "No dairy found" });
-    res.status(201).send({ data: dairy });
+    res.status(201).send({ dairy });
   } catch (err) {
     next(err, req, res, next);
   }
@@ -21,7 +21,7 @@ exports.getDairyById = async (req, res, next) => {
     );
     if (!dairy && dairy.createdBy !== id)
       return res.status(401).send({ message: "No dairy found" });
-    res.status(201).send({ data: dairy });
+    res.status(201).send({ ...dairy });
   } catch (err) {
     next(err, req, res, next);
   }
