@@ -2,12 +2,15 @@
   "name": "dairy-app-backend",
   "version": "1.0.0",
   "description": "dairy app API server",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "nodemon index.js"
+    "dev": "nodemon server.js",
+    "test": "npm run dev",
+    "start":"node server.js"
   },
   "keywords": [
-    "dairy"
+    "dairy",
+    "API"
   ],
   "author": "afeef",
   "license": "ISC",
